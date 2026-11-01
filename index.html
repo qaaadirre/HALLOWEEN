@@ -174,16 +174,50 @@ footer{font-size:22px;padding-top:40px}
 
 <script>
 const $=s=>document.querySelector(s);
-// ====== SET YOUR PHOTO FOLDER URL HERE (must end with /) ======
-const PHOTO_FOLDER='photos/';   // e.g. 'https://yoursite.com/halloween/'
+// ====== PHOTO CONFIGURATION (loaded securely from Vercel) ======
 const caps=['The Haunting Begins','Jack Awakens','Midnight Visitor','Candlelit Secrets','Trick or Treat'];
 const emo=['🎃','👻','🦇','🕯️','🧙'];
-const srcs=[1,2,3,4,5].map(n=>PHOTO_FOLDER+'photo'+n+'.jpg'),ok=[];
-// gallery slots
+let srcs=[], ok=[];
+
+// Gallery slots
 const grid=$('#grid');
-for(let i=1;i<5;i++){const d=document.createElement('div');d.className='pol';d.innerHTML=`<div class="im"><div class="ph">${emo[i]}</div></div><p>${caps[i]}</p>`;d.onclick=()=>openLb(i);grid.appendChild(d)}
-srcs.forEach((s,i)=>{const im=new Image();im.onload=()=>{ok[i]=1;im.alt=caps[i];
- if(i===0)$('#frame').replaceChildren(im);else grid.children[i-1].querySelector('.im').replaceChildren(im)};im.src=s});
+for(let i=1;i<5;i++){
+ const d=document.createElement('div');
+ d.className='pol';
+ d.innerHTML=`<div class="im"><div class="ph">${emo[i]}</div></div><p>${caps[i]}</p>`;
+ d.onclick=()=>openLb(i);
+ grid.appendChild(d);
+}
+
+// Fetch the folder URL from the Vercel serverless function.
+// The folder must be publicly accessible and contain photo1.jpg ... photo5.jpg.
+async function loadPhotos(){
+ try{
+  const response=await fetch('/api/photo-config');
+  if(!response.ok) throw new Error('Photo configuration could not be loaded');
+  const config=await response.json();
+  if(!config.photoFolder) throw new Error('PHOTO_FOLDER_URL is not configured');
+
+  const folder=config.photoFolder.replace(/\\/?$/, '/');
+  srcs=Array.from({length:5},(_,i)=>`${folder}photo${i+1}.jpg`);
+  ok=Array(5).fill(false);
+
+  srcs.forEach((s,i)=>{
+   const im=new Image();
+   im.onload=()=>{
+    ok[i]=true;
+    im.alt=caps[i];
+    if(i===0) $('#frame').replaceChildren(im);
+    else grid.children[i-1].querySelector('.im').replaceChildren(im);
+   };
+   im.onerror=()=>console.warn(`Could not load Halloween image: ${s}`);
+   im.src=s;
+  });
+ }catch(error){
+  console.error('Unable to load Halloween photos:',error);
+ }
+}
+loadPhotos();
 $('#frame').onclick=()=>openLb(0);
 // lightbox
 let cur=0;const lb=$('#lb');
