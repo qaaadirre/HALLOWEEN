@@ -198,7 +198,7 @@ async function loadPhotos(){
   const config=await response.json();
   if(!config.photoFolder) throw new Error('PHOTO_FOLDER_URL is not configured');
 
-  const folder=config.photoFolder.replace(/\\/?$/, '/');
+ const folder=config.photoFolder.replace(/\/?$/, '/');
   srcs=Array.from({length:5},(_,i)=>`${folder}photo${i+1}.jpg`);
   ok=Array(5).fill(false);
 
