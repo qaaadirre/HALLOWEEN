@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haunted Halloween Night</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07040d;--bg2:#1b0f33;--or:#ff7a1a;--pu:#9b5cff;--gr:#8cff3c;--tx:#f3ecff;--mu:#a99bc4;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 50% 0,var(--bg2),var(--bg) 65%) fixed;color:var(--tx);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,.fx{font-family:Creepster,Chalkduster,cursive;font-weight:400;letter-spacing:.05em}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+#spot{position:fixed;inset:0;z-index:30;pointer-events:none;background:radial-gradient(circle 300px at var(--mx,50%) var(--my,40%),transparent 0,transparent 35%,rgba(4,1,9,.55) 100%)}
+#fl{position:fixed;inset:0;background:#d6c4ff;opacity:0;pointer-events:none;z-index:40;mix-blend-mode:screen}
+#fl.on{animation:zap .7s}
+@keyframes zap{0%,30%,50%{opacity:0}10%{opacity:.55}20%{opacity:.1}40%{opacity:.7}100%{opacity:0}}
+#intro{position:fixed;inset:0;z-index:100;background:#05020a;display:grid;place-content:center;text-align:center;gap:18px;transition:opacity 1.2s,visibility 1.2s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .fx{font-size:clamp(34px,8vw,70px);color:var(--or);animation:flick 3s infinite;text-shadow:0 0 30px var(--or)}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:center;gap:26px;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;background:rgba(7,4,13,.65);backdrop-filter:blur(10px);border-bottom:1px solid rgba(155,92,255,.2)}
+nav a{color:var(--tx);text-decoration:none;font-size:15px;opacity:.8;transition:.25s}
+nav a:hover{color:var(--or);opacity:1;text-shadow:0 0 14px var(--or)}
+.spider{position:fixed;top:-110px;left:11%;z-index:15;font-size:34px;text-align:center;animation:drop 7s ease-in-out infinite alternate;pointer-events:none}
+.spider i{display:block;width:1px;height:110px;margin:0 auto;background:linear-gradient(#fff0,#ddd)}
+@keyframes drop{to{transform:translateY(190px)}}
+.web{position:fixed;top:0;width:150px;z-index:14;opacity:.45;pointer-events:none}
+.web.r{right:0;transform:scaleX(-1)}.web.l{left:0}
+.bat{position:fixed;z-index:5;pointer-events:none;animation:fly linear infinite}
+@keyframes fly{from{transform:translateX(-10vw)}25%{transform:translate(25vw,-40px) scaleY(.8)}50%{transform:translate(55vw,30px)}75%{transform:translate(80vw,-30px) scaleY(.8)}to{transform:translate(112vw,10px)}}
+section{position:relative;z-index:2;padding:90px 20px;max-width:1100px;margin:auto}
+.hero{max-width:none;min-height:100vh;display:grid;place-items:center;text-align:center;padding-top:110px;overflow:hidden}
+.moon{position:absolute;top:90px;right:9%;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe0,#ffd98a 60%,#e8a94d);box-shadow:0 0 90px 24px rgba(255,200,100,.35);animation:glow 4s ease-in-out infinite alternate}
+@keyframes glow{to{box-shadow:0 0 140px 44px rgba(255,200,100,.5);transform:translateY(10px)}}
+.hills{position:absolute;bottom:0;left:0;width:100%;height:240px;z-index:1;pointer-events:none}
+.hero>div.in{position:relative;z-index:3}
+.tag{color:var(--pu);font-size:26px}
+h1{font-size:clamp(50px,12vw,130px);line-height:1;margin:8px 0 14px;color:var(--or);animation:flick 5s infinite;text-shadow:0 0 20px var(--or),0 0 70px rgba(255,122,26,.55)}
+@keyframes flick{0%,18%,22%,60%,64%,100%{opacity:1}20%,62%{opacity:.35}}
+.sub{color:var(--mu);max-width:580px;margin:0 auto 26px;font-size:18px;min-height:56px}
+.sub:after{content:"|";animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--or),#ff3d00);color:#1a0b00;border:0;padding:14px 30px;border-radius:40px;font:600 16px Inter,sans-serif;cursor:pointer;text-decoration:none;transition:.25s;box-shadow:0 0 26px rgba(255,122,26,.5)}
+.btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 0 46px var(--or)}
+.btn.alt{background:transparent;color:var(--tx);border:2px solid var(--pu);box-shadow:none;margin-left:8px}
+.fw{width:min(88vw,540px);margin:34px auto 0;animation:float 6s ease-in-out infinite;perspective:900px}
+@keyframes float{50%{transform:translateY(-14px)}}
+.frame{position:relative;aspect-ratio:4/3;border-radius:20px;overflow:hidden;border:3px solid var(--or);cursor:zoom-in;background:linear-gradient(#2d1858,#0b0713);box-shadow:0 0 50px rgba(255,122,26,.5),0 0 0 8px rgba(255,122,26,.12),inset 0 0 50px rgba(0,0,0,.6);transition:transform .15s}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.frame:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-120%);animation:shine 5s infinite}
+@keyframes shine{to{transform:translateX(120%)}}
+.ph{display:grid;place-items:center;height:100%;font-size:clamp(90px,24vw,160px);filter:drop-shadow(0 0 26px var(--or));animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:scale(1.08) rotate(-4deg)}}
+.marq{position:relative;z-index:2;overflow:hidden;white-space:nowrap;background:linear-gradient(90deg,#2a1450,#4a1d00,#2a1450);border-block:1px solid var(--or);padding:12px 0;transform:rotate(-1deg);margin:10px -10px}
+.marq span{display:inline-block;font:400 26px Creepster,cursive;color:var(--or);animation:mq 22s linear infinite;letter-spacing:.1em}
+@keyframes mq{to{transform:translateX(-50%)}}
+h2{font-size:clamp(38px,7vw,62px);text-align:center;margin:0 0 12px;color:var(--gr);text-shadow:0 0 20px rgba(140,255,60,.5)}
+.cd{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.cd div{background:rgba(155,92,255,.12);border:1px solid var(--pu);border-radius:18px;padding:18px 22px;min-width:92px;text-align:center;backdrop-filter:blur(6px)}
+.cd b{display:block;font:400 46px Creepster,cursive;color:var(--or);text-shadow:0 0 16px var(--or)}
+.cd span{font-size:12px;color:var(--mu);text-transform:uppercase;letter-spacing:.16em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:34px 26px;margin-top:44px}
+.pol{background:#f5ecd9;padding:12px 12px 8px;border-radius:4px;color:#2a1a10;cursor:zoom-in;box-shadow:0 14px 30px rgba(0,0,0,.6);transform:rotate(var(--r));transition:.4s cubic-bezier(.2,.8,.2,1);text-align:center}
+.pol:nth-child(1){--r:-3deg}.pol:nth-child(2){--r:2.5deg}.pol:nth-child(3){--r:-1.5deg}.pol:nth-child(4){--r:3deg}
+.pol:hover{transform:rotate(0) translateY(-12px) scale(1.06);box-shadow:0 22px 60px rgba(255,122,26,.55);z-index:3}
+.pol .im{aspect-ratio:1;background:linear-gradient(145deg,#2d1858,#120a22);overflow:hidden}
+.pol .im img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s}
+.pol:hover img{transform:scale(1.1)}
+.pol .ph{font-size:80px}
+.pol p{margin:10px 0 4px;font:400 22px Creepster,cursive;letter-spacing:.05em}
+.reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+#lb{position:fixed;inset:0;background:rgba(4,1,9,.95);z-index:60;display:none;place-items:center;cursor:zoom-out}
+#lb.on{display:grid;animation:fade .3s}
+#lb img{max-width:90vw;max-height:84vh;border-radius:12px;box-shadow:0 0 70px var(--or)}
+#lb em{position:absolute;bottom:28px;font:400 28px Creepster,cursive;color:var(--or);font-style:normal}
+#lb b{position:absolute;top:50%;font-size:46px;color:var(--or);padding:18px;cursor:pointer;user-select:none;transform:translateY(-50%)}
+@keyframes fade{from{opacity:0}}
+.ghost{position:fixed;bottom:-80px;font-size:44px;opacity:.45;z-index:4;pointer-events:none;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-120vh) translateX(50px);opacity:0}}
+.fog{position:fixed;left:-20%;right:-20%;bottom:0;height:220px;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,rgba(155,92,255,.24),transparent 70%);animation:drift 12s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(14%)}}
+footer{position:relative;z-index:2;text-align:center;padding:60px 20px calc(80px + env(safe-area-inset-bottom,0px));color:var(--mu);font-size:26px}
+.credit{margin:34px auto 0;padding-top:22px;max-width:420px;border-top:1px solid rgba(155,92,255,.35);font:400 15px Inter,sans-serif;letter-spacing:.04em}
+.credit b{color:var(--or);font-weight:600;text-shadow:0 0 12px rgba(255,122,26,.6);animation:flick 6s infinite}
+.credit small{display:block;margin-top:8px;font-size:12px;opacity:.7}
+.wa{display:inline-block;margin-top:16px;padding:12px 26px;border-radius:40px;background:linear-gradient(135deg,#25d366,#128c7e);color:#04210f;font:600 16px Inter,sans-serif;text-decoration:none;box-shadow:0 0 24px rgba(37,211,102,.5);animation:pulse 2s infinite;transition:.25s}
+.wa:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 0 44px #25d366}
+@keyframes pulse{50%{box-shadow:0 0 40px rgba(37,211,102,.85)}}
+.sub2{text-align:center;color:var(--mu);margin:0 0 6px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:28px}
+.fc{height:190px;perspective:900px;cursor:pointer}
+.fi{position:relative;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.fc.f .fi{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:grid;place-items:center;padding:16px;text-align:center}
+.fa{background:linear-gradient(145deg,#2d1858,#120a22);border:1px solid var(--pu);font-size:64px}
+.fb{background:linear-gradient(145deg,#4a1d00,#2a1450);border:1px solid var(--or);transform:rotateY(180deg);font-size:15px;line-height:1.5}
+.score{font-size:18px;color:var(--mu);margin:14px 0}.score b{color:var(--or);font-size:22px}
+.arena{position:relative;height:320px;max-width:700px;margin:0 auto 22px;border:2px dashed var(--pu);border-radius:20px;overflow:hidden;background:rgba(155,92,255,.06);touch-action:manipulation}
+.tg{position:absolute;font-size:44px;cursor:pointer;user-select:none;animation:pop .25s}
+@keyframes pop{from{transform:scale(0)}}
+.story{max-width:660px;margin:24px auto;padding:26px;border:1px solid var(--or);border-radius:18px;background:rgba(255,122,26,.07);font-size:18px;line-height:1.7;min-height:120px;display:grid;place-items:center}
+.hero{min-height:100svh}
+html,body{max-width:100%}
+@media(hover:none){#spot{display:none}.pol:hover{transform:rotate(var(--r));box-shadow:0 14px 30px rgba(0,0,0,.6)}.pol:hover img{transform:none}.btn:hover,.wa:hover{transform:none}}
+@media(max-width:700px){#lb b{font-size:36px;padding:14px 10px;background:rgba(0,0,0,.35);border-radius:10px}#lb img{max-width:96vw;max-height:76vh}#lb em{font-size:22px;bottom:22px}}
+@media(max-width:560px){
+nav{gap:20px;padding-inline:10px}nav a{font-size:14px}
+section{padding:64px 16px}
+.hero{padding:96px 14px 150px}
+.moon{top:78px;right:4%;width:60px;height:60px;box-shadow:0 0 50px 12px rgba(255,200,100,.35)}
+.web{width:80px}
+.spider{left:4%;font-size:26px;animation-name:dropm}
+@keyframes dropm{to{transform:translateY(110px)}}
+.tag{font-size:20px}
+h1{font-size:clamp(44px,15vw,72px);margin:6px 0 10px}
+.sub{font-size:16px;min-height:96px;padding:0 4px}
+.in .btn{display:block;width:100%;max-width:300px;margin:10px auto 0}
+.btn.alt{margin:10px auto 0}
+.fw{width:94vw;margin-top:28px}
+.frame{border-radius:16px;box-shadow:0 0 36px rgba(255,122,26,.5),0 0 0 5px rgba(255,122,26,.12),inset 0 0 40px rgba(0,0,0,.6)}
+.hills{height:130px}
+.marq span{font-size:20px}
+h2{font-size:clamp(34px,10vw,48px)}
+.grid{grid-template-columns:repeat(2,1fr);gap:26px 14px;margin-top:32px}
+.pol{padding:8px 8px 2px}.pol p{font-size:16px;margin:8px 0 4px}.pol .ph{font-size:56px}
+.ghost{font-size:30px}.bat{max-width:30px}
+footer{font-size:22px;padding-top:40px}
+.credit{font-size:14px;margin-top:26px}
+.wa{width:100%;max-width:280px}
+#intro .fx{padding:0 16px}
+}
+@media(max-width:340px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas><div id="spot"></div><div id="fl"></div><div class="fog"></div>
+<div id="intro"><div class="fx">Do you dare enter?</div><div><button class="btn" id="enter">Enter if you dare</button></div></div>
+<svg class="web l" viewBox="0 0 150 150" fill="none" stroke="#fff" stroke-width="1"><path d="M0 0L150 0M0 0L0 150M0 0L130 110M0 0L110 130M0 0L145 55M0 0L55 145"/><path d="M40 0Q35 35 0 40M80 0Q70 70 0 80M120 0Q105 105 0 120M40 12Q22 22 12 40"/></svg>
+<svg class="web r" viewBox="0 0 150 150" fill="none" stroke="#fff" stroke-width="1"><path d="M0 0L150 0M0 0L0 150M0 0L130 110M0 0L110 130M0 0L145 55M0 0L55 145"/><path d="M40 0Q35 35 0 40M80 0Q70 70 0 80M120 0Q105 105 0 120M40 12Q22 22 12 40"/></svg>
+<div class="spider"><i></i>🕷️</div>
+<nav><a href="#home">Home</a><a href="#gallery">Gallery</a><a href="#facts">Facts</a><a href="#game">Game</a><a href="#story">Story</a></nav>
+
+<section class="hero" id="home">
+  <div class="moon"></div>
+  <svg class="hills" viewBox="0 0 1200 240" preserveAspectRatio="none"><path d="M0 240V140Q200 70 400 140T800 130T1200 120V240Z" fill="#0d0720"/><path d="M0 240V190Q300 130 600 190T1200 180V240Z" fill="#05020a"/><g stroke="#05020a" stroke-width="5" fill="none" stroke-linecap="round"><path d="M110 200V110M110 150L80 120M110 135L140 105M110 120L95 95"/><path d="M1060 195V100M1060 140L1030 112M1060 125L1092 98M1060 110L1045 85"/></g></svg>
+  <div class="in">
+    <div class="tag fx">🕸️ Welcome, brave souls 🕸️</div>
+    <h1>Haunted Halloween Night</h1>
+    <p class="sub" id="type"></p>
+    <a class="btn" href="#gallery">Enter the gallery</a>
+    <div class="fw"><div class="frame" id="frame"><div class="ph">🎃</div></div></div>
+  </div>
+</section>
+
+<div class="marq"><span id="mq"></span></div>
+
+
+
+<section id="gallery" class="reveal">
+  <h2>Gallery of Fright</h2>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="facts" class="reveal"><h2>Spooky Facts</h2><p class="sub2">Tap a card to flip it</p><div class="facts" id="fg"></div></section>
+
+<section id="game" class="reveal" style="text-align:center"><h2>Catch the Ghosts</h2><p class="sub2">Tap ghosts, pumpkins and bats. Avoid the skulls!</p><div class="score">Score <b id="sc">0</b> · Time <b id="tm">20</b>s · Best <b id="bs">0</b></div><div class="arena" id="arena"></div><button class="btn" id="start">👻 Start game</button></section>
+
+<section id="story" class="reveal" style="text-align:center"><h2>Summon a Scary Story</h2><div class="story" id="st">Press the button if you dare…</div><button class="btn" id="sb">🔮 Summon a story</button></section>
+
+<footer class="fx">Happy Halloween 🎃 Trick or treat, if you dare.<div class="credit">🕸️ Designed &amp; developed by <b id="dev">Abdul Khadher</b> 🕷️<a class="wa" href="https://wa.me/917560920774?text=Hi%20Abdul%2C%20I%20saw%20your%20Halloween%20website%20and%20I%27d%20like%20one%20made%20for%20me!" target="_blank" rel="noopener">💬 Make mine</a><small>© <span id="yr"></span> All rights reserved</small></div></footer>
+<div id="lb"><b style="left:0" id="pv">‹</b><div id="lbi"></div><em id="cap"></em><b style="right:0" id="nx">›</b></div>
+
+<script>
+const $=s=>document.querySelector(s);
+// ====== SET YOUR PHOTO FOLDER URL HERE (must end with /) ======
+const PHOTO_FOLDER='photos/';   // e.g. 'https://yoursite.com/halloween/'
+const caps=['The Haunting Begins','Jack Awakens','Midnight Visitor','Candlelit Secrets','Trick or Treat'];
+const emo=['🎃','👻','🦇','🕯️','🧙'];
+const srcs=[1,2,3,4,5].map(n=>PHOTO_FOLDER+'photo'+n+'.jpg'),ok=[];
+// gallery slots
+const grid=$('#grid');
+for(let i=1;i<5;i++){const d=document.createElement('div');d.className='pol';d.innerHTML=`<div class="im"><div class="ph">${emo[i]}</div></div><p>${caps[i]}</p>`;d.onclick=()=>openLb(i);grid.appendChild(d)}
+srcs.forEach((s,i)=>{const im=new Image();im.onload=()=>{ok[i]=1;im.alt=caps[i];
+ if(i===0)$('#frame').replaceChildren(im);else grid.children[i-1].querySelector('.im').replaceChildren(im)};im.src=s});
+$('#frame').onclick=()=>openLb(0);
+// lightbox
+let cur=0;const lb=$('#lb');
+function list(){return srcs.map((s,i)=>i).filter(i=>ok[i])}
+function openLb(i){if(!ok[i])return;cur=i;show();lb.classList.add('on')}
+function show(){$('#lbi').innerHTML=`<img src="${srcs[cur]}" alt="">`;$('#cap').textContent=caps[cur]}
+function step(d){const l=list();if(!l.length)return;cur=l[(l.indexOf(cur)+d+l.length)%l.length];show()}
+lb.onclick=()=>lb.classList.remove('on');
+$('#pv').onclick=e=>{e.stopPropagation();step(-1)};$('#nx').onclick=e=>{e.stopPropagation();step(1)};
+document.onkeydown=e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')lb.classList.remove('on');if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)};
+// 3D tilt
+const fr=$('#frame');
+fr.onpointermove=e=>{const r=fr.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;fr.style.transform=`rotateY(${x*14}deg) rotateX(${-y*14}deg)`};
+fr.onpointerleave=()=>fr.style.transform='';
+// spotlight
+addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--mx',e.clientX+'px');document.documentElement.style.setProperty('--my',e.clientY+'px')});
+// intro + lightning
+function zap(){const f=$('#fl');f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+$('#enter').onclick=()=>{$('#intro').classList.add('gone');zap();typer()};
+(function l(){setTimeout(()=>{zap();l()},9000+Math.random()*9000)})();
+// typewriter
+function typer(){const t="Candles flicker, shadows dance and something is watching from the dark…";let i=0;(function n(){$('#type').textContent=t.slice(0,i++);if(i<=t.length)setTimeout(n,38)})()}
+// marquee
+$('#mq').textContent=('🎃 TRICK OR TREAT 🦇 BEWARE 👻 BOO 🕷️ SWEET SCREAMS 🕯️ ').repeat(8);
+// countdown
+const u=['Days','Hours','Minutes','Seconds'];
+function tick(){const n=new Date();let t=new Date(n.getFullYear(),9,31),hw=n.getMonth()===9&&n.getDate()===31;
+ if(hw)t=new Date(n.getFullYear(),9,32);else if(t<n)t=new Date(n.getFullYear()+1,9,31);
+ $('#cdt').textContent=hw?'🎃 Tonight Is Halloween! The haunting ends in…':'Next Halloween Rises In…';
+ const s=Math.floor((t-n)/1000),v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+ $('#cd').innerHTML=v.map((x,i)=>`<div><b>${String(x).padStart(2,'0')}</b><span>${u[i]}</span></div>`).join('')}
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// facts
+[['🎃','Jack-o’-lanterns were first carved from turnips in Ireland, long before pumpkins.'],['🦇','Bats are the only mammals that can truly fly.'],['🕸️','Spiders have been spinning webs for over 100 million years.'],['🍬','Candy corn was invented in the 1880s.'],['👻','Halloween grew out of Samhain, an ancient Celtic festival.'],['🧙','Black cats were once believed to be companions of witches.']].forEach(f=>{const d=document.createElement('div');d.className='fc';d.innerHTML=`<div class="fi"><div class="fa">${f[0]}</div><div class="fb">${f[1]}</div></div>`;d.onclick=()=>d.classList.toggle('f');$('#fg').appendChild(d)});
+// game
+let score=0,time=20,run=0,best=0,t1,t2;try{best=+localStorage.getItem('hbest')||0}catch(e){}
+$('#bs').textContent=best;
+function spawn(){const a=$('#arena'),e=document.createElement('div'),k=['👻','👻','🎃','🦇','💀'][Math.floor(Math.random()*5)];
+ e.className='tg';e.textContent=k;e.style.left=Math.random()*(a.clientWidth-56)+'px';e.style.top=Math.random()*(a.clientHeight-56)+'px';
+ e.onpointerdown=()=>{if(!run)return;score+=k==='💀'?-2:1;$('#sc').textContent=score;e.remove()};a.appendChild(e);setTimeout(()=>e.remove(),1300)}
+function end(){run=0;clearInterval(t1);clearInterval(t2);$('#arena').innerHTML='';if(score>best){best=score;$('#bs').textContent=best;try{localStorage.setItem('hbest',best)}catch(e){}}
+ $('#start').textContent='👻 Play again';$('#start').disabled=false}
+$('#start').onclick=()=>{score=0;time=20;run=1;$('#sc').textContent=0;$('#tm').textContent=20;$('#start').disabled=true;$('#start').textContent='Catch them!';
+ t1=setInterval(spawn,600);t2=setInterval(()=>{$('#tm').textContent=--time;if(time<=0)end()},1000)};
+// story
+const P=['an abandoned lighthouse','a candlelit cemetery','the old pumpkin patch','a creaking attic','the foggy village square'],C=['a whispering ghost','a witch with glowing eyes','a skeleton in a top hat','a giant black cat','a hooded stranger'],T=['and every candle blew out at once.','and the pumpkins began to laugh.','and the clock struck thirteen.','and your shadow waved back.','and the door slowly opened by itself.'],pk=a=>a[Math.floor(Math.random()*a.length)];
+$('#sb').onclick=()=>{$('#st').textContent=`On Halloween night you wandered into ${pk(P)}. There you met ${pk(C)}, ${pk(T)}`;zap()};
+$('#yr').textContent=new Date().getFullYear();
+// bats + ghosts
+for(let i=0;i<5;i++){const b=document.createElement('div');b.className='bat';b.textContent='🦇';b.style.cssText=`top:${8+Math.random()*45}vh;animation-duration:${14+Math.random()*14}s;animation-delay:${-Math.random()*20}s;font-size:${20+Math.random()*22}px`;document.body.appendChild(b)}
+for(let i=0;i<6;i++){const g=document.createElement('div');g.className='ghost';g.textContent='👻';g.style.cssText=`left:${Math.random()*95}vw;animation-duration:${14+Math.random()*12}s;animation-delay:${-Math.random()*20}s`;document.body.appendChild(g)}
+// stars, embers, sparkle trail
+const c=$('#sky'),x=c.getContext('2d');let W,H,st=[],em=[],sp=[];
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight;st=Array.from({length:110},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.3,p:Math.random()*6}));em=Array.from({length:40},()=>({x:Math.random()*W,y:H+Math.random()*H,v:.3+Math.random()*.8,r:1+Math.random()*2}))}
+rs();addEventListener('resize',rs);
+addEventListener('pointermove',e=>{for(let i=0;i<2;i++)sp.push({x:e.clientX,y:e.clientY,vx:(Math.random()-.5)*2,vy:Math.random()*2+.5,l:1})});
+(function loop(t){x.clearRect(0,0,W,H);
+ st.forEach(s=>{x.globalAlpha=.4+.6*Math.abs(Math.sin(t/900+s.p));x.fillStyle='#fff';x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill()});
+ x.fillStyle='#ff9a3c';em.forEach(e=>{e.y-=e.v;e.x+=Math.sin(e.y/40)*.4;if(e.y<-10){e.y=H+10;e.x=Math.random()*W}x.globalAlpha=.7;x.beginPath();x.arc(e.x,e.y,e.r,0,7);x.fill()});
+ sp=sp.filter(p=>p.l>0);sp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.l-=.025;x.globalAlpha=p.l;x.fillStyle='#ff7a1a';x.beginPath();x.arc(p.x,p.y,3*p.l,0,7);x.fill()});
+ requestAnimationFrame(loop)})(0);
+</script>
+</body>
+</html>
