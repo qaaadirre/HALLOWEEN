@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Día de los Muertos</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12051f;--bg2:#2a0b45;--mg:#ff2e88;--or:#ff9f1c;--te:#19d3c5;--bo:#fff4e0;--mu:#c9b3dd;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 50% 0,var(--bg2),var(--bg) 70%) fixed;color:var(--bo);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,.fx{font-family:'Abril Fatface',Georgia,serif;font-weight:400}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+#intro{position:fixed;inset:0;z-index:100;background:radial-gradient(circle,#2a0b45,#08020f);display:grid;place-content:center;text-align:center;gap:20px;padding:20px;transition:opacity 1.2s,visibility 1.2s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .fx{font-size:clamp(32px,8vw,64px);color:var(--or);text-shadow:0 0 30px var(--or)}
+.flame{font-size:70px;cursor:pointer;animation:fl 1.6s infinite;filter:drop-shadow(0 0 24px var(--or))}
+@keyframes fl{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.15) rotate(3deg)}}
+.pp{position:fixed;top:0;left:0;right:0;z-index:18;display:flex;height:70px;pointer-events:none;padding-top:env(safe-area-inset-top,0px)}
+.pp i{flex:1;transform-origin:top;animation:sway 4s ease-in-out infinite alternate;clip-path:polygon(0 0,100% 0,100% 82%,85% 100%,70% 82%,50% 100%,30% 82%,15% 100%,0 82%);-webkit-mask:radial-gradient(circle at 50% 38%,transparent 5px,#000 6px);mask:radial-gradient(circle at 50% 38%,transparent 5px,#000 6px);opacity:.92}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+nav{position:fixed;top:calc(52px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:6px;padding:6px;border-radius:40px;background:rgba(18,5,31,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,159,28,.35)}
+nav a{color:var(--bo);text-decoration:none;font-size:14px;padding:7px 14px;border-radius:30px;transition:.25s}
+nav a:hover{background:var(--or);color:#2a0b45}
+section{position:relative;z-index:2;padding:90px 20px;max-width:1100px;margin:auto}
+.hero{max-width:none;min-height:100svh;display:grid;place-items:center;text-align:center;padding:150px 16px 80px;overflow:hidden}
+.sun{position:absolute;top:18%;left:50%;width:560px;height:560px;max-width:120vw;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,159,28,.4),rgba(255,46,136,.15) 50%,transparent 70%);animation:pulse 5s ease-in-out infinite alternate;pointer-events:none}
+@keyframes pulse{to{transform:translateX(-50%) scale(1.15)}}
+.in{position:relative;z-index:3}
+.tag{color:var(--te);font-size:22px;letter-spacing:.06em}
+h1{font-size:clamp(46px,11vw,112px);line-height:1;margin:8px 0 14px;background:linear-gradient(90deg,var(--or),var(--mg),var(--te));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(255,46,136,.45))}
+.sub{color:var(--mu);max-width:600px;margin:0 auto 24px;font-size:18px;min-height:56px;line-height:1.6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--or),var(--mg));color:#1d0630;border:0;padding:14px 30px;border-radius:40px;font:600 16px Inter,sans-serif;cursor:pointer;text-decoration:none;transition:.25s;box-shadow:0 0 26px rgba(255,46,136,.45)}
+.btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 0 46px var(--mg)}
+.btn.alt{background:transparent;color:var(--bo);border:2px solid var(--te);box-shadow:none;margin-left:8px}
+.fw{width:min(80vw,380px);margin:36px auto 0;animation:float 6s ease-in-out infinite;perspective:900px}
+@keyframes float{50%{transform:translateY(-14px)}}
+.frame{position:relative;aspect-ratio:4/5;border-radius:220px 220px 20px 20px;overflow:hidden;border:10px dotted var(--or);cursor:zoom-in;background:linear-gradient(#3b1262,#12051f);box-shadow:0 0 60px rgba(255,159,28,.5),inset 0 0 50px rgba(0,0,0,.55);transition:transform .15s}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.sk{width:80%;height:100%;display:block;margin:auto;animation:bob 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,159,28,.6))}
+@keyframes bob{50%{transform:scale(1.05) rotate(-2deg)}}
+.marq{position:relative;z-index:2;overflow:hidden;white-space:nowrap;background:linear-gradient(90deg,#4a0f6e,#7a1346,#4a0f6e);border-block:2px solid var(--or);padding:12px 0;transform:rotate(-1deg);margin:10px -10px}
+.marq span{display:inline-block;font:400 24px 'Abril Fatface',serif;color:var(--or);animation:mq 24s linear infinite;letter-spacing:.08em}
+@keyframes mq{to{transform:translateX(-50%)}}
+h2{font-size:clamp(34px,7vw,58px);text-align:center;margin:0 0 10px;color:var(--or);text-shadow:0 0 20px rgba(255,159,28,.5)}
+.sub2{text-align:center;color:var(--mu);margin:0 0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px 26px;margin-top:44px}
+.por{background:linear-gradient(145deg,#3b1262,#1d0836);padding:12px 12px 6px;border-radius:120px 120px 14px 14px;border:4px dotted var(--mg);cursor:zoom-in;text-align:center;transition:.4s cubic-bezier(.2,.8,.2,1);box-shadow:0 14px 30px rgba(0,0,0,.55)}
+.por:hover{transform:translateY(-12px) scale(1.05);box-shadow:0 22px 60px rgba(255,46,136,.5)}
+.por .im{aspect-ratio:1;border-radius:110px 110px 8px 8px;overflow:hidden;background:#12051f;display:grid;place-items:center;font-size:80px}
+.por .im img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s}
+.por:hover img{transform:scale(1.1)}
+.por p{margin:10px 0 6px;font:400 19px 'Abril Fatface',serif;color:var(--or)}
+.altar{margin:30px auto;max-width:760px;padding:24px 18px;border-radius:20px;border:2px solid var(--or);background:linear-gradient(#2a0b45,#12051f);box-shadow:0 0 50px rgba(255,159,28,.25),inset 0 0 40px rgba(0,0,0,.4)}
+.ctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ctl input{flex:1 1 200px;max-width:300px;padding:13px 18px;border-radius:30px;border:2px solid var(--te);background:rgba(0,0,0,.35);color:var(--bo);font:16px Inter,sans-serif;outline:0}
+.tools{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.tools button{background:rgba(255,159,28,.12);border:1px solid var(--or);color:var(--bo);border-radius:30px;padding:8px 14px;font:14px Inter,sans-serif;cursor:pointer;transition:.2s}
+.tools button:hover{background:var(--or);color:#2a0b45}
+.ofr{min-height:170px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:flex-end;padding-top:16px;border-top:1px dashed rgba(255,159,28,.4)}
+.it{text-align:center;font-size:42px;animation:pop .4s;max-width:96px}
+.it.c{animation:pop .4s,fl 2s infinite .4s;filter:drop-shadow(0 0 14px var(--or))}
+.it small{display:block;font:12px Inter,sans-serif;color:var(--bo);margin-top:2px;word-break:break-word}
+@keyframes pop{from{transform:scale(0) translateY(20px)}}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:28px}
+.fc{height:200px;perspective:900px;cursor:pointer}
+.fi{position:relative;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.fc.f .fi{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:grid;place-items:center;padding:16px;text-align:center}
+.fa{background:linear-gradient(145deg,#4a0f6e,#1d0836);border:2px solid var(--mg);font-size:58px}
+.fa b{display:block;font:400 20px 'Abril Fatface',serif;color:var(--or);margin-top:6px}
+.fb{background:linear-gradient(145deg,#7a1346,#3b1262);border:2px solid var(--or);transform:rotateY(180deg);font-size:15px;line-height:1.55}
+.cal{max-width:640px;margin:26px auto;padding:26px;border:2px dashed var(--te);border-radius:18px;background:rgba(25,211,197,.07);font-size:18px;line-height:1.8;min-height:130px;display:grid;place-items:center;font-style:italic;white-space:pre-line}
+.reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+#lb{position:fixed;inset:0;background:rgba(8,2,15,.95);z-index:60;display:none;place-items:center;cursor:zoom-out}
+#lb.on{display:grid;animation:fade .3s}
+#lb img{max-width:90vw;max-height:82vh;border-radius:14px;box-shadow:0 0 70px var(--or)}
+#lb em{position:absolute;bottom:26px;font:400 26px 'Abril Fatface',serif;color:var(--or);font-style:normal}
+#lb b{position:absolute;top:50%;font-size:44px;color:var(--or);padding:16px;cursor:pointer;user-select:none;transform:translateY(-50%)}
+@keyframes fade{from{opacity:0}}
+footer{position:relative;z-index:2;text-align:center;padding:60px 20px calc(80px + env(safe-area-inset-bottom,0px));color:var(--mu);font-size:26px}
+.credit{margin:32px auto 0;padding-top:22px;max-width:420px;border-top:1px solid rgba(255,159,28,.4);font:400 15px Inter,sans-serif}
+.credit b{color:var(--or);font-weight:600;text-shadow:0 0 12px rgba(255,159,28,.6)}
+.credit small{display:block;margin-top:8px;font-size:12px;opacity:.7}
+.wa{display:inline-block;margin-top:16px;padding:12px 26px;border-radius:40px;background:linear-gradient(135deg,#25d366,#128c7e);color:#04210f;font:600 16px Inter,sans-serif;text-decoration:none;box-shadow:0 0 24px rgba(37,211,102,.5);animation:wp 2s infinite;transition:.25s}
+@keyframes wp{50%{box-shadow:0 0 40px rgba(37,211,102,.85)}}
+@media(hover:none){.por:hover{transform:none;box-shadow:0 14px 30px rgba(0,0,0,.55)}.por:hover img{transform:none}.btn:hover{transform:none}}
+@media(max-width:700px){#lb b{font-size:34px;padding:12px 8px;background:rgba(0,0,0,.4);border-radius:10px}#lb img{max-width:96vw;max-height:74vh}}
+@media(max-width:560px){
+.pp{height:54px}nav{top:calc(44px + env(safe-area-inset-top,0px));max-width:96vw;overflow-x:auto}nav a{font-size:13px;padding:7px 10px}
+section{padding:64px 16px}.hero{padding:130px 14px 70px}
+.sub{font-size:16px;min-height:100px}
+.btn{display:block;width:100%;max-width:300px;margin:10px auto 0}.btn.alt{margin:10px auto 0}
+.grid{grid-template-columns:repeat(2,1fr);gap:26px 12px}.por{padding:8px 8px 2px;border-width:3px}.por p{font-size:14px}.por .im{font-size:52px}
+.marq span{font-size:19px}footer{font-size:22px}.wa{width:100%;max-width:280px}.fc{height:210px}
+}
+@media(max-width:340px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div id="intro"><div class="fx">Light a candle to enter</div><div class="flame" id="enter" role="button" aria-label="Enter">🕯️</div><div style="color:var(--mu)">Tap the candle</div></div>
+<div class="pp" id="pp"></div>
+<nav><a href="#home">Home</a><a href="#gallery">Retratos</a><a href="#ofrenda">Ofrenda</a><a href="#traditions">Traditions</a><a href="#calavera">Calavera</a></nav>
+
+<section class="hero" id="home">
+  <div class="sun"></div>
+  <div class="in">
+    <div class="tag fx">🌼 1 &amp; 2 November 🌼</div>
+    <h1>Día de los Muertos</h1>
+    <p class="sub" id="type"></p>
+    <a class="btn" href="#ofrenda">Light a candle</a><a class="btn alt" href="#gallery">View portraits</a>
+    <div class="fw"><div class="frame" id="frame">
+      <svg class="sk" viewBox="0 0 200 230" aria-hidden="true">
+        <g fill="#ff9f1c"><circle cx="100" cy="22" r="11"/><circle cx="76" cy="30" r="9" fill="#ff2e88"/><circle cx="124" cy="30" r="9" fill="#ff2e88"/><circle cx="58" cy="44" r="8"/><circle cx="142" cy="44" r="8"/></g>
+        <ellipse cx="100" cy="100" rx="68" ry="72" fill="#fff4e0"/>
+        <path d="M62 155Q62 212 100 212T138 155Z" fill="#fff4e0"/>
+        <g fill="#12051f"><circle cx="70" cy="98" r="23"/><circle cx="130" cy="98" r="23"/></g>
+        <g fill="none" stroke="#ff2e88" stroke-width="4"><circle cx="70" cy="98" r="26"/><circle cx="130" cy="98" r="26"/></g>
+        <g fill="#19d3c5"><circle cx="70" cy="98" r="9"/><circle cx="130" cy="98" r="9"/></g><g fill="#ff9f1c"><circle cx="70" cy="98" r="4"/><circle cx="130" cy="98" r="4"/></g>
+        <path d="M100 138L91 126Q89 117 97 118Q100 120 100 124Q100 120 103 118Q111 117 109 126Z" fill="#12051f"/>
+        <path d="M66 164Q100 180 134 164" stroke="#12051f" stroke-width="4" fill="none"/>
+        <path d="M72 168V196M86 172V203M100 174V206M114 172V203M128 168V196" stroke="#12051f" stroke-width="3.5"/>
+        <g fill="#ff2e88"><circle cx="52" cy="128" r="5"/><circle cx="148" cy="128" r="5"/></g><g fill="#19d3c5"><circle cx="48" cy="142" r="3"/><circle cx="152" cy="142" r="3"/></g>
+      </svg>
+    </div></div>
+  </div>
+</section>
+
+<div class="marq"><span id="mq"></span></div>
+
+<section id="gallery" class="reveal">
+  <h2>Retratos de Recuerdo</h2>
+  <p class="sub2">Faces we love, always remembered</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="ofrenda" class="reveal">
+  <h2>Build an Ofrenda</h2>
+  <p class="sub2">Write a name to light a candle for them, then add offerings to the altar.</p>
+  <div class="altar">
+    <div class="ctl"><input id="nm" maxlength="20" placeholder="Name of a loved one"><button class="btn" id="lc">🕯️ Light candle</button></div>
+    <div class="tools" id="tools"></div>
+    <div class="ofr" id="ofr"></div>
+    <div class="ctl" style="margin-top:14px"><button class="btn alt" id="clr" style="margin:0;padding:9px 20px;font-size:14px">Clear altar</button></div>
+  </div>
+</section>
+
+<section id="traditions" class="reveal">
+  <h2>Living Traditions</h2>
+  <p class="sub2">Tap a card to flip it</p>
+  <div class="facts" id="fg"></div>
+</section>
+
+<section id="calavera" class="reveal" style="text-align:center">
+  <h2>Calavera Literaria</h2>
+  <p class="sub2">Playful verses once written to honour the living and the departed</p>
+  <div class="ctl" style="margin-top:18px"><input id="cn" maxlength="20" placeholder="Enter a name"><button class="btn" id="cb">💀 Write a verse</button></div>
+  <div class="cal" id="cv">Enter a name to receive a verse…</div>
+</section>
+
+<footer class="fx">Viva la memoria 🌼 Those we love never truly leave.
+  <div class="credit">💀 Designed &amp; developed by <b>Abdul Khadher</b> 🌼<a class="wa" href="https://wa.me/917560920774?text=Hi%20Abdul%2C%20I%20saw%20your%20D%C3%ADa%20de%20los%20Muertos%20website%20and%20I%27d%20like%20one%20made%20for%20me!" target="_blank" rel="noopener">💬 Make mine</a><small>© <span id="yr"></span> All rights reserved</small></div>
+</footer>
+<div id="lb"><b style="left:0" id="pv">‹</b><div id="lbi"></div><em id="cap"></em><b style="right:0" id="nx">›</b></div>
+
+<script>
+const $=s=>document.querySelector(s);
+// papel picado
+const cols=['#ff2e88','#ff9f1c','#19d3c5','#b05cff','#ffd23f','#ff6b3d'];
+$('#pp').innerHTML=Array.from({length:16},(_,i)=>`<i style="background:${cols[i%6]};animation-delay:${-i*.45}s"></i>`).join('');
+// intro
+$('#enter').onclick=()=>{$('#intro').classList.add('gone');typer()};
+function typer(){const t="A celebration of life, love and memory. Light a candle, share a story and welcome home those who came before us.";let i=0;(function n(){$('#type').textContent=t.slice(0,i++);if(i<=t.length)setTimeout(n,30)})()}
+$('#mq').textContent=('🌼 VIVA LA VIDA 💀 HONOURING OUR ANCESTORS 🕯️ SIEMPRE EN EL CORAZÓN 🌼 ').repeat(8);
+// photos (same Vercel API pattern as your repo: /api/photo-config -> {photoFolder})
+const caps=['Siempre en el corazón','Memoria viva','Amor eterno','Luz que no se apaga','Hasta pronto'],emo=['💀','🌼','🕯️','🦋','🌹'];
+let srcs=[],ok=[];const grid=$('#grid');
+for(let i=1;i<5;i++){const d=document.createElement('div');d.className='por';d.innerHTML=`<div class="im">${emo[i]}</div><p>${caps[i]}</p>`;d.onclick=()=>openLb(i);grid.appendChild(d)}
+async function loadPhotos(){try{const r=await fetch('/api/photo-config');if(!r.ok)throw 0;const c=await r.json();if(!c.photoFolder)throw 0;
+ const f=c.photoFolder.replace(/\/?$/,'/');srcs=Array.from({length:5},(_,i)=>`${f}photo${i+1}.jpg`);ok=Array(5).fill(false);
+ srcs.forEach((s,i)=>{const im=new Image();im.onload=()=>{ok[i]=true;im.alt=caps[i];if(i===0)$('#frame').replaceChildren(im);else grid.children[i-1].querySelector('.im').replaceChildren(im)};im.src=s})}catch(e){}}
+loadPhotos();$('#frame').onclick=()=>openLb(0);
+let cur=0;const lb=$('#lb');
+const list=()=>srcs.map((s,i)=>i).filter(i=>ok[i]);
+function openLb(i){if(!ok[i])return;cur=i;show();lb.classList.add('on')}
+function show(){$('#lbi').innerHTML=`<img src="${srcs[cur]}" alt="">`;$('#cap').textContent=caps[cur]}
+function step(d){const l=list();if(!l.length)return;cur=l[(l.indexOf(cur)+d+l.length)%l.length];show()}
+lb.onclick=()=>lb.classList.remove('on');
+$('#pv').onclick=e=>{e.stopPropagation();step(-1)};$('#nx').onclick=e=>{e.stopPropagation();step(1)};
+document.onkeydown=e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')lb.classList.remove('on');if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)};
+const fr=$('#frame');
+fr.onpointermove=e=>{const r=fr.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;fr.style.transform=`rotateY(${x*14}deg) rotateX(${-y*14}deg)`};
+fr.onpointerleave=()=>fr.style.transform='';
+// ofrenda
+let items=[];try{items=JSON.parse(localStorage.getItem('ofr')||'[]')}catch(e){}
+const save=()=>{try{localStorage.setItem('ofr',JSON.stringify(items))}catch(e){}};
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function draw(){$('#ofr').innerHTML=items.length?items.map(o=>`<div class="it${o.c?' c':''}">${o.e}${o.n?`<small>${esc(o.n)}</small>`:''}</div>`).join(''):'<span style="color:var(--mu);align-self:center">Your altar is waiting…</span>'}
+function add(o){if(items.length>=30)items.shift();items.push(o);save();draw()}
+$('#lc').onclick=()=>{const n=$('#nm').value.trim();add({e:'🕯️',n:n,c:1});$('#nm').value=''};
+$('#nm').onkeydown=e=>{if(e.key==='Enter')$('#lc').click()};
+[['🌼','Marigolds'],['🍞','Pan de muerto'],['💀','Sugar skull'],['🍫','Chocolate'],['💧','Water'],['🌹','Roses'],['🦋','Butterfly']].forEach(t=>{const b=document.createElement('button');b.textContent=t[0]+' '+t[1];b.onclick=()=>add({e:t[0]});$('#tools').appendChild(b)});
+$('#clr').onclick=()=>{items=[];save();draw()};draw();
+// traditions
+[['🌼','Cempasúchil','Marigolds, called flor de muerto, guide spirits home with their bright colour and strong scent.'],['🍞','Pan de muerto','This sweet bread is baked for the season and shared on the altar and at the table.'],['💀','Calaveras','Sugar skulls and skeleton art celebrate life and turn the fear of death into joy.'],['🕯️','Candles','Candles light the path so loved ones can find their way back to the ofrenda.'],['🎶','Stories &amp; music','Families share stories and favourite songs of those they remember.'],['🏛️','World heritage','UNESCO recognised Mexico’s Day of the Dead as intangible cultural heritage in 2008.']].forEach(f=>{const d=document.createElement('div');d.className='fc';d.innerHTML=`<div class="fi"><div class="fa"><div>${f[0]}<b>${f[1]}</b></div></div><div class="fb">${f[2]}</div></div>`;d.onclick=()=>d.classList.toggle('f');$('#fg').appendChild(d)});
+// calavera
+const V=[n=>`Here dances ${n}, with a smile so bright,\nAmong the marigolds all through the night.\nThough far from our arms, you are never apart,\nYou live on forever in every heart.`,n=>`Little skull ${n}, so merry and bold,\nWith stories of laughter that never grow old.\nThe candles are glowing, the music is sweet,\nCome home to the table, the bread and the treat!`,n=>`Oh ${n}, the petals mark your way,\nCome share with us this festive day.\nDeath is a doorway, not an end,\nThe ones we love are always our friend.`];
+$('#cb').onclick=()=>{const n=$('#cn').value.trim()||'dear friend';$('#cv').textContent=V[Math.floor(Math.random()*V.length)](n)};
+$('#cn').onkeydown=e=>{if(e.key==='Enter')$('#cb').click()};
+$('#yr').textContent=new Date().getFullYear();
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// petals + sparkles
+const c=$('#sky'),x=c.getContext('2d');let W,H,pt=[],sp=[];
+const pc=['#ff9f1c','#ffb627','#ff6b3d','#ffd23f'];
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight;pt=Array.from({length:Math.min(45,Math.floor(W/20))},()=>({x:Math.random()*W,y:Math.random()*H,r:4+Math.random()*6,v:.5+Math.random(),a:Math.random()*6,s:.01+Math.random()*.03,c:pc[Math.floor(Math.random()*4)]}))}
+rs();addEventListener('resize',rs);
+addEventListener('pointermove',e=>{for(let i=0;i<2;i++)sp.push({x:e.clientX,y:e.clientY,vx:(Math.random()-.5)*2,vy:Math.random()*2+.5,l:1})});
+(function loop(){x.clearRect(0,0,W,H);
+ pt.forEach(p=>{p.y+=p.v;p.x+=Math.sin(p.a)*.8;p.a+=p.s;if(p.y>H+10){p.y=-10;p.x=Math.random()*W}x.save();x.translate(p.x,p.y);x.rotate(p.a);x.globalAlpha=.75;x.fillStyle=p.c;x.beginPath();x.ellipse(0,0,p.r,p.r/2.2,0,0,7);x.fill();x.restore()});
+ sp=sp.filter(p=>p.l>0);sp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.l-=.025;x.globalAlpha=p.l;x.fillStyle='#ff2e88';x.beginPath();x.arc(p.x,p.y,3*p.l,0,7);x.fill()});
+ requestAnimationFrame(loop)})();
+</script>
+</body>
+</html>
