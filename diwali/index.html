@@ -243,7 +243,7 @@ const M=['May Goddess Lakshmi bless you with health, wealth and happiness this D
 N.forEach((n,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=n;b.onclick=()=>{ws=i;document.querySelectorAll('#wch .chip').forEach((x,j)=>x.classList.toggle('on',j===i));card()};$('#wch').appendChild(b)});
 function card(){const to=$('#wt').value.trim()||'Friend',fr=$('#wf').value.trim();
  $('#wc').innerHTML=`<div class="cz">🪔 Happy Diwali 🪔</div><div class="to">Dear ${esc(to)},</div><p>${M[ws]}</p>${fr?`<div class="fr">With love, ${esc(fr)}</div>`:''}`;
- $('#ws').href='https://wa.me/?text='+encodeURIComponent(`🪔 Happy Diwali, ${to}! ${M[ws]}${fr?' With love, '+fr:''} ✨`)}
+ $('#ws').href='https://wa.me/?text='+encodeURIComponent(`🪔 Happy Diwali, ${to}! ${M[ws]}${fr?' With love, '+fr:''} ✨  , https://diwali-qodex.vercel.app/`)}
 $('#wt').oninput=$('#wf').oninput=card;card();
 $('#yr').textContent=new Date().getFullYear();
 const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.1});
